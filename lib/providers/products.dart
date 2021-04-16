@@ -3,7 +3,7 @@ import '../models/product.dart';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
-     Product(
+    Product(
       id: 'p1',
       title: 'Red Shirt',
       description: 'A red shirt - it is pretty red!',
@@ -39,6 +39,10 @@ class Products with ChangeNotifier {
   //list of product as a property.
   List<Product> get items {
     return [..._items];
+  }
+
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
   }
 
   void addProduct() {
