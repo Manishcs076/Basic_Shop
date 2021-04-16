@@ -47,6 +47,7 @@ class ProductOverviewScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         itemCount: loadedProduct.length,
         itemBuilder: (ctx, i) => ProductItem(
+          //loadedProduct[i].price,
           loadedProduct[i].id,
           loadedProduct[i].title,
           loadedProduct[i].imageUrl,
