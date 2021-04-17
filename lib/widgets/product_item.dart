@@ -1,7 +1,8 @@
+import 'package:basic_shop_app/providers/product.dart';
 import 'package:flutter/material.dart';
 import '../screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
-import '../providers/product.dart';
+//import '../providers/product.dart';
 //import '../models/product.dart';
 
 class ProductItem extends StatelessWidget {
@@ -12,7 +13,11 @@ class ProductItem extends StatelessWidget {
   //ProductItem(this.id, this.title, this.imageUrl,/* this.price*/);
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context,/* listen: false*/);
+    final product = Provider.of<Product>(
+      context,
+      listen: false,
+    );
+    //print('Product rebuilds'); for checking listen: false working or not
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: GridTile(
@@ -30,14 +35,24 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border,
+          leading: Consumer<Product>(
+            builder: (
+              ctx,
+              product,
+              _,
+              /*child no need so skipped it with an underscore*/
+            ) =>
+                IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              //label: child,
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
+              color: Theme.of(context).accentColor,
             ),
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
-            color: Theme.of(context).accentColor,
+            //child: Text('Never Changes'),
           ),
           title: Text(
             product.title,
