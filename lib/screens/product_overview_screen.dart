@@ -1,5 +1,8 @@
+import '../providers/cart.dart';
+import 'package:provider/provider.dart';
 import '../widgets/products_grid.dart';
 import 'package:flutter/material.dart';
+import '../widgets/badge.dart';
 
 enum FilterOptions {
   Favorites,
@@ -15,6 +18,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavorites = false;
   @override
   Widget build(BuildContext context) {
+    // final cart = Provider.of<Cart>(context); we can do via this too but if any thing will be change then whole widget will rebuild
     return Scaffold(
       appBar: AppBar(
         title: Text('Apna Store'),
@@ -42,6 +46,18 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                 value: FilterOptions.All,
               ),
             ],
+          ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              child: ch,
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {},
+            ),
           ),
         ],
       ),
