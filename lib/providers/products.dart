@@ -72,7 +72,7 @@ class Products with ChangeNotifier {
       id: DateTime.now().toString(),
     );
     _items.add(newProduct);
-    //_items.insert(0, newProduct); add items add the begining of the list
+   // _items.insert(0, newProduct); //add items add the begining of the list
     notifyListeners();
   }
 
@@ -84,5 +84,10 @@ class Products with ChangeNotifier {
     } else {
       print('...');
     }
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
   }
 }
