@@ -123,7 +123,18 @@ class Products with ChangeNotifier {
 
   // print(json.decode(response.body));
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
+    final url =
+        'https://flutter-update-ce149-default-rtdb.firebaseio.com/products/$id.json';
+    await http.patch(
+      url,
+      body: json.encode({
+        'title': newProduct.title,
+        'description': newProduct.description,
+        'imageUrl': newProduct.imageUrl,
+        'price': newProduct.price,
+      }),
+    );
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       _items[prodIndex] = newProduct;
