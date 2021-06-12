@@ -1,3 +1,5 @@
+import './providers/auth.dart';
+
 import './screens/auth_screen.dart';
 
 import './screens/orders_screen.dart';
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider(
           create: (ctx) => Products(),
         ),
@@ -46,11 +51,9 @@ class MyApp extends StatelessWidget {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
-          UserProductsScreen.routeName:(ctx) => UserProductsScreen(),
-          EditProductScreen.routeName:(ctx) => EditProductScreen(),
-         // AuthScreen.routeName:(ctx)=> AuthScreen(),
-          
-
+          UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+          EditProductScreen.routeName: (ctx) => EditProductScreen(),
+          // AuthScreen.routeName:(ctx)=> AuthScreen(),
         },
       ),
     );
