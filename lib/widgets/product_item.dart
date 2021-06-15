@@ -1,3 +1,5 @@
+import '../providers/auth.dart';
+
 import '../providers/cart.dart';
 
 import '../providers/product.dart';
@@ -23,6 +25,8 @@ class ProductItem extends StatelessWidget {
       context,
       listen: false,
     );
+
+    final authData = Provider.of<Auth>(context, listen: false);
     //print('Product rebuilds'); for checking listen: false working or not
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
@@ -54,7 +58,7 @@ class ProductItem extends StatelessWidget {
               ),
               //label: child,
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(authData.token);
               },
               color: Theme.of(context).accentColor,
             ),
