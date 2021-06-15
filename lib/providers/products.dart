@@ -41,6 +41,10 @@ class Products with ChangeNotifier {
   ];
   //var _showFavoritesOnly = false;
   //list of product as a property.
+  final String authToken;
+
+  Products(this.authToken,this._items);
+
   List<Product> get items {
     // if (_showFavoritesOnly) {
     // return _items.where((prodItem) => prodItem.isFavorite).toList();
@@ -66,8 +70,8 @@ class Products with ChangeNotifier {
   //  notifyListeners();
   // }
   Future<void> fetchAndSetProducts() async {
-    const url =
-        'https://flutter-update-ce149-default-rtdb.firebaseio.com/products.json';
+    final url =
+        'https://flutter-update-ce149-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
