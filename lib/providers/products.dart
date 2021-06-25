@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -74,7 +73,8 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
-    final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
         'https://flutter-update-ce149-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString';
     try {
@@ -157,7 +157,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url =
-                'https://flutter-update-ce149-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
+        'https://flutter-update-ce149-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
@@ -171,4 +171,3 @@ class Products with ChangeNotifier {
     existingProduct = null;
   }
 }
-

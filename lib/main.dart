@@ -1,3 +1,5 @@
+import './screens/splash_screen.dart';
+
 import './screens/product_overview_screen.dart';
 
 import './providers/auth.dart';
@@ -42,9 +44,8 @@ class MyApp extends StatelessWidget {
           value: Cart(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
-          update: (ctx, auth, previousOrders) => Orders(
-            auth.userId,
-              auth.token, previousOrders == null ? [] : previousOrders.orders),
+          update: (ctx, auth, previousOrders) => Orders(auth.userId, auth.token,
+              previousOrders == null ? [] : previousOrders.orders),
         )
       ],
       child: Consumer<Auth>(
@@ -55,7 +56,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrangeAccent,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) => authResultSnapshot
+                              .connectionState ==
+                          ConnectionState.waiting
+                      ? SplashScreen()
+                      : /*authResultSnapshot.data = false  ? :*/ AuthScreen(),
+                ),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
