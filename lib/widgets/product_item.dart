@@ -38,8 +38,9 @@ class ProductItem extends StatelessWidget {
               arguments: product.id,
             );
           },
-          child: Image.network(
-            product.imageUrl,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/product-placeholder.png'),
+            image: NetworkImage(product.imageUrl),
             fit: BoxFit.cover,
           ),
         ),
@@ -58,7 +59,7 @@ class ProductItem extends StatelessWidget {
               ),
               //label: child,
               onPressed: () {
-                product.toggleFavoriteStatus(authData.token,authData.userId);
+                product.toggleFavoriteStatus(authData.token, authData.userId);
               },
               color: Theme.of(context).accentColor,
             ),
