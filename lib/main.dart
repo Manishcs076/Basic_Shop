@@ -9,6 +9,7 @@ import './screens/auth_screen.dart';
 import './screens/orders_screen.dart';
 
 import './providers/orders.dart';
+import './helpers/custom_route.dart';
 
 import './screens/cart_screen.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Products>(
+          create: (_) => Products('', '', []),
           update: (ctx, auth, previousProducts) => Products(
             auth.token,
             auth.userId,
@@ -44,9 +46,10 @@ class MyApp extends StatelessWidget {
           value: Cart(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
+          create: (_) => Orders('', '', []),
           update: (ctx, auth, previousOrders) => Orders(auth.userId, auth.token,
               previousOrders == null ? [] : previousOrders.orders),
-        )
+        ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
@@ -55,6 +58,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.purple,
             accentColor: Colors.deepOrangeAccent,
             fontFamily: 'Lato',
+            pageTransitionsTheme: PageTransitionsTheme(builders:{
+              TargetPlatform.android: CustomPageTransitionBuilder(),
+              TargetPlatform.iOS: CustomPageTransitionBuilder(),
+            }, ),
           ),
           home: auth.isAuth
               ? ProductOverviewScreen()
